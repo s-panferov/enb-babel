@@ -1,0 +1,36 @@
+{
+  "name": "enb-babel",
+  "version": "0.1.0",
+  "description": "enb babel tech",
+  "keywords": [
+    "enb",
+    "babel"
+  ],
+  "author": "Stanislav Panferov <fnight.m@gmail.com>",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/s-panferov/enb-babel/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:s-panferov/enb-babel.git"
+  },
+  "homepage": "https://github.com/s-panferov/enb-babel",
+  "bugs": "https://github.com/s-panferov/enb-babel/issues",
+  "maintainers": [
+    {
+      "name": "Stanislav Panferov",
+      "email": "fnight.m@gmail.com",
+      "github-username": "s-panferov"
+    }
+  ],
+  "peerDependencies": {
+    "enb": ">=0.8.43 <1.0.0"
+  },
+  "dependencies": {
+    "babel": "^5.1.11",
+    "vow": "^0.4.9"
+  }
+}
