@@ -12,6 +12,9 @@ module.exports = require('enb/lib/build-flow').create()
     .defineOption('destTarget')
     .optionAlias('destTarget', 'target')
     .useSourceText('sourceTarget')
+    .saveCache(function(cache) {
+        cache.cacheFileInfo('', this._modulesFile);
+    })
     .builder(function (js) {
         var babelOptions = this._options.babelOptions;
         return "require('babel/register')(" 
