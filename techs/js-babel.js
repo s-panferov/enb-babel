@@ -4,6 +4,8 @@ var path = require('path'),
     Concat = require('concat-with-sourcemaps'),
     fs = require('fs'),
     vow = require('vow');
+    
+var sourcemap = require('../lib/sourcemap');
 
 module.exports = require('enb/lib/build-flow').create()
     .name('js-babel')
@@ -18,7 +20,7 @@ module.exports = require('enb/lib/build-flow').create()
 
         return vow.all(files.map(function (arg) {
             var def = vow.defer();
-            babel.transformFile(arg.fullname, _.merge({}, babelOptions), function(err, result) {
+            babel.transformFile(arg.fullname, _.merge({filenameRelative : "/" + path.relative(process.cwd(), arg.fullname)}, babelOptions), function(err, result) {
                 if (err) {
                     def.reject(err);
                 } else {
@@ -31,7 +33,10 @@ module.exports = require('enb/lib/build-flow').create()
                 if (transform.result.map) {
                     concat.add(transform.file.fullname, transform.result.code, transform.result.map)
                 } else {
-                    concat.add(transform.file.fullname, transform.result.code)
+                    var node = sourcemap.generate(transform.file.fullname, transform.result.code);
+                    concat.add(sourcemap.normalizeFileName(transform.file.fullname), 
+                        transform.result.code, 
+                        JSON.parse(node.map.toString()));
                 }
             })
 

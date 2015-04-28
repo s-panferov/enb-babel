@@ -24,6 +24,8 @@ var vowFs = require('vow-fs');
 var Concat = require('concat-with-sourcemaps');
 var fs = require('fs');
 
+var sourcemap = require('../lib/sourcemap');
+
 module.exports = require('enb/lib/build-flow').create()
     .name('file-merge')
     .target('target', '?.target')
@@ -52,7 +54,14 @@ module.exports = require('enb/lib/build-flow').create()
             ])
         })).then(function (results) {
             results.forEach(function(file) {
-                concat.add(file[0], file[1], file[2])
+                var map;
+                if (file[2]) {
+                    map = file[2];
+                } else {
+                    var node = sourcemap.generate(file[0], file[1]);
+                    map = JSON.parse(node.map.toString());
+                }
+                concat.add(sourcemap.normalizeFileName(file[0]), file[1], map)
             })
             fs.writeFileSync(target + '.map', concat.sourceMap);
             return concat.content;

@@ -33,6 +33,7 @@
     "babel": "^5.1.13",
     "concat-with-sourcemaps": "^1.0.2",
     "lodash": "^3.7.0",
+    "source-map": "^0.4.2",
     "vow": "^0.4.9",
     "vow-fs": "^0.3.4",
     "ym": "^0.1.1"
