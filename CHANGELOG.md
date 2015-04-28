@@ -1,3 +1,14 @@
+<a name"0.3.0"></a>
+## 0.3.0 (2015-04-28)
+
+
+#### Features
+
+* ***:**
+  * generate sourcemaps for not-babel files; relative paths ([ebc44e6f](https://github.com/s-panferov/enb-babel/commit/ebc44e6f))
+  * add sourcemap support into all the techs ([8adad0fc](https://github.com/s-panferov/enb-babel/commit/8adad0fc))
+
+
 <a name"0.2.0"></a>
 ## 0.2.0 (2015-04-27)
 
