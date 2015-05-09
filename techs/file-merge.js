@@ -37,7 +37,7 @@ module.exports = require('enb/lib/build-flow').create()
         var concat = new Concat(true, 'all.js', '\n');
         var divider = this._divider;
         var files = sources.map(function(sourceFilename) {
-            return {main: sourceFilename, map: sourceFilename + '.map'}
+            return {main: sourceFilename, map: sourceFilename + '.map'};
         });
         var target = this.node.resolvePath(this._target);
         return Vow.all(files.map(function (file) {
@@ -48,10 +48,10 @@ module.exports = require('enb/lib/build-flow').create()
                     if(exists) {
                         return vowFs.read(file.map, 'utf8');
                     } else {
-                        return Vow.resolve(null)
+                        return Vow.resolve(null);
                     }
                 })
-            ])
+            ]);
         })).then(function (results) {
             results.forEach(function(file) {
                 var map;
@@ -61,8 +61,8 @@ module.exports = require('enb/lib/build-flow').create()
                     var node = sourcemap.generate(file[0], file[1]);
                     map = JSON.parse(node.map.toString());
                 }
-                concat.add(sourcemap.normalizeFileName(file[0]), file[1], map)
-            })
+                concat.add(sourcemap.normalizeFileName(file[0]), file[1], map);
+            });
             fs.writeFileSync(target + '.map', concat.sourceMap);
             return concat.content;
         });

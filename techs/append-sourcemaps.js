@@ -11,8 +11,8 @@ module.exports = require('enb/lib/build-flow').create()
         return vowFs.copy(sourceFileName + '.map', this.node.resolvePath(target) + '.map')
             .then(function() {
                 return vowFs.read(sourceFileName, 'utf8').then(function(sourceText) {
-                    return sourceText + '\n' + '//# sourceMappingURL=' + target + '.map'
-                })
+                    return sourceText + '\n' + '//# sourceMappingURL=' + target + '.map';
+                });
             });
     })
     .createTech();
