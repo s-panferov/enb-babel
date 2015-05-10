@@ -22,7 +22,7 @@
 var vowFs = require('enb/lib/fs/async-fs'),
     Vow = require('vow'),
     Concat = require('concat-with-sourcemaps'),
-    fs = require('fs')
+    fs = require('fs'),
     path = require('path');
 
 module.exports = require('enb/lib/build-flow').create()
@@ -49,20 +49,20 @@ module.exports = require('enb/lib/build-flow').create()
                 if(exists) {
                     return vowFs.read(preTargetSourceFileName + '.map', 'utf8');
                 } else {
-                    return Vow.resolve(null)
+                    return Vow.resolve(null);
                 }
             })
         ]).then(function(modulesRes) {
             concat.add("modules.js", modulesRes[0]);
-            concat.add("modules.1.js", 
+            concat.add("modules.1.js",
                 "if(typeof module !== 'undefined') {" +
                 "modules = module.exports;" +
                 "}\n");
-            concat.add(preTargetSourceFileName, modulesRes[1], modulesRes[2])
+            concat.add(preTargetSourceFileName, modulesRes[1], modulesRes[2]);
             fs.writeFileSync(target + '.map', concat.sourceMap);
             return concat.content;
         }, function () {
             throw new Error('Module system was not found. Please install `ym` npm module: npm install ym');
-        })
+        });
     })
     .createTech();
