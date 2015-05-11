@@ -4,16 +4,21 @@ var path = require('path'),
     Concat = require('concat-with-sourcemaps'),
     fs = require('fs'),
     vow = require('vow');
-    
+
 var sourcemap = require('../lib/sourcemap');
 
 module.exports = require('enb/lib/build-flow').create()
     .name('js-babel')
     .target('target', '?.browser.js')
     .defineOption('babelOptions')
-    .useFileList(['vanilla.js', 'js', 'browser.js'])
+    .useFileList(['vanilla.js', 'js', 'browser.js', 'jsx'])
     .builder(function (files) {
-        var babelOptions = this._options.babelOptions;
+
+        var babelOptions = _.merge(
+                this._options.babelOptions || {},
+                { externalHelpers: 'var' }
+            );
+
         var concat = new Concat(true, 'all.js', '\n');
 
         var target = this.node.resolvePath(this._target);
@@ -34,14 +39,14 @@ module.exports = require('enb/lib/build-flow').create()
                     concat.add(transform.file.fullname, transform.result.code, transform.result.map)
                 } else {
                     var node = sourcemap.generate(transform.file.fullname, transform.result.code);
-                    concat.add(sourcemap.normalizeFileName(transform.file.fullname), 
-                        transform.result.code, 
+                    concat.add(sourcemap.normalizeFileName(transform.file.fullname),
+                        transform.result.code,
                         JSON.parse(node.map.toString()));
                 }
             })
 
             fs.writeFileSync(target + '.map', concat.sourceMap);
-            return concat.content;
+            return babel.buildExternalHelpers() + '\n' + concat.content;
         });
     })
     .createTech();
