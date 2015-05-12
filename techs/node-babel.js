@@ -17,7 +17,7 @@ module.exports = require('enb/lib/build-flow').create()
     })
     .builder(function (js) {
         var babelOptions = this._options.babelOptions;
-        return "require('babel/register')(" 
+        return "require('babel/register')("
             + util.inspect(babelOptions ? _.merge({}, babelOptions) : {}) + ");\n" + js;
     })
     .createTech();

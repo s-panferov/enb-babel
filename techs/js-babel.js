@@ -14,12 +14,10 @@ module.exports = require('enb/lib/build-flow').create()
     .useFileList(['vanilla.js', 'js', 'browser.js', 'jsx'])
     .builder(function (files) {
 
-        var babelOptions = _.merge(this._options.babelOptions || {},
-                                {
-                                    externalHelpers: 'var',
-                                    metadataUsedHelpers: true
-                                }
-                            );
+        var babelOptions = _.merge(this._options.babelOptions || {}, {
+            externalHelpers: 'var',
+            metadataUsedHelpers: true
+        });
 
         var concat = new Concat(true, 'all.js', '\n');
 
@@ -64,16 +62,19 @@ module.exports = require('enb/lib/build-flow').create()
                     concatArgs.push([file.fullname, result.code, result.map]);
                 } else {
                     node = sourcemap.generate(file.fullname, result.code);
-                    concatArgs.push(
-                            [
-                                sourcemap.normalizeFileName(file.fullname),
-                                result.code,
-                                JSON.parse(node.map.toString())
-                            ]);
+                    concatArgs.push([
+                        sourcemap.normalizeFileName(file.fullname),
+                        result.code,
+                        JSON.parse(node.map.toString())
+                    ]);
                 }
             });
 
-            concat.add('babelHelpers.js', babel.buildExternalHelpers(usedHelpers));
+            var babelHelpers = babel.buildExternalHelpers(usedHelpers);
+            var babelHelpersSourceMap = sourcemap.generate('babelHelpers.js', babelHelpers);
+            var babelHelpersSourceMapEncoded = JSON.parse(babelHelpersSourceMap.map.toString());
+
+            concat.add('babelHelpers.js', babelHelpers, babelHelpersSourceMapEncoded);
 
             concatArgs.forEach(function(arg) {
                 concat.add.apply(concat, arg);
