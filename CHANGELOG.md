@@ -1,3 +1,12 @@
+<a name"0.3.2"></a>
+### 0.3.2 (2015-05-12)
+
+
+#### Features
+
+* **js-babel:** refactor code style; generate source map for babel helpers ([d56d57ca](https://github.com/s-panferov/enb-babel/commit/d56d57ca))
+
+
 <a name"0.3.1"></a>
 ### 0.3.1 (2015-05-10)
 
