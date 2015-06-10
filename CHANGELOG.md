@@ -1,3 +1,12 @@
+<a name"0.3.3"></a>
+### 0.3.3 (2015-06-10)
+
+
+#### Features
+
+* **js-babel:** remove deprecated option ([67fd98fe](https://github.com/s-panferov/enb-babel/commit/67fd98fe))
+
+
 <a name"0.3.2"></a>
 ### 0.3.2 (2015-05-12)
 
