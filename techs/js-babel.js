@@ -15,8 +15,7 @@ module.exports = require('enb/lib/build-flow').create()
     .builder(function (files) {
 
         var babelOptions = _.merge(this._options.babelOptions || {}, {
-            externalHelpers: 'var',
-            metadataUsedHelpers: true
+            externalHelpers: 'var'
         });
 
         var concat = new Concat(true, 'all.js', '\n');
