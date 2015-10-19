@@ -27,7 +27,7 @@
     }
   ],
   "peerDependencies": {
-    "enb": ">=0.8.43 <1.0.0"
+    "enb": ">=0.8.43 <2.0.0"
   },
   "dependencies": {
     "babel": "^5.1.13",

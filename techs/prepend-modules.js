@@ -19,7 +19,8 @@
  * ```
  */
 
-var vowFs = require('enb/lib/fs/async-fs'),
+var enb = require('enb'),
+    vowFs = enb.asyncFs || require('enb/lib/fs/async-fs'),
     Vow = require('vow'),
     Concat = require('concat-with-sourcemaps'),
     fs = require('fs'),
