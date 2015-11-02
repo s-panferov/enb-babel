@@ -1,3 +1,12 @@
+<a name"0.4.0-rc.0"></a>
+### 0.4.0-rc.0 (2015-11-02)
+
+
+#### Features
+
+* ***:** impl fs-cache ([32a7d440](https://github.com/s-panferov/enb-babel/commit/32a7d440))
+
+
 <a name"0.3.3"></a>
 ### 0.3.3 (2015-06-10)
 
