@@ -5,6 +5,7 @@ var path = require('path'),
     uniqConcat = require('unique-concat'),
     fs = require('fs'),
     vow = require('vow'),
+    fsCache = require('../lib/fs-cache'),
     sourcemap = require('../lib/sourcemap');
 
 module.exports = require('enb/lib/build-flow').create()
@@ -15,30 +16,44 @@ module.exports = require('enb/lib/build-flow').create()
     .builder(function (files) {
 
         var babelOptions = _.merge(this._options.babelOptions || {}, {
-            externalHelpers: 'var'
+            externalHelpers: 'var',
+            ast: false,
         });
 
         var concat = new Concat(true, 'all.js', '\n');
-
         var target = this.node.resolvePath(this._target);
 
         return vow.all(files.map(function (arg) {
             var def = vow.defer();
 
-            babel.transformFile(
-                arg.fullname,
-                _.merge(
-                    {filenameRelative : "/" + path.relative(process.cwd(), arg.fullname)},
-                    babelOptions
-                ),
-                function(err, result) {
+            var finalOptions = _.merge(
+                {
+                    filename: arg.fullname,
+                    filenameRelative : "/" + path.relative(process.cwd(), arg.fullname)
+                },
+                babelOptions
+            );
+
+            fsCache({
+                    directory: '.enb/babel',
+                    identifier: arg.fullname,
+                    source: fs.readFileSync(arg.fullname),
+                    options: finalOptions,
+                    transform: function(source, options) {
+                        return babel.transform(
+                            source,
+                            finalOptions
+                        );
+                    },
+                },
+                function (err, result) {
                     if (err) {
                         def.reject(err);
                     } else {
                         def.resolve({file : arg, result : result});
                     }
                 }
-            );
+            )
 
             return def.promise();
 

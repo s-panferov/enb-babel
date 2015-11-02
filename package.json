@@ -30,7 +30,7 @@
     "enb": ">=0.8.43 <2.0.0"
   },
   "dependencies": {
-    "babel": "^5.1.13",
+    "babel": "^5.8.23",
     "concat-with-sourcemaps": "^1.0.2",
     "lodash": "^3.7.0",
     "source-map": "^0.4.2",
