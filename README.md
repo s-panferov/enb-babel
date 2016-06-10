@@ -1,3 +1,3 @@
-# enb-babel
+# THIS PROJECT IS NOT MAINTAINED
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/s-panferov/enb-babel?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Please see https://github.com/DimitryDushkin/enb-es2015 as possible alternative.
